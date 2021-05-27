@@ -2,6 +2,10 @@ package pl.edu.pwsztar.chess.domain;
 
 import org.springframework.transaction.annotation.Transactional;
 import pl.edu.pwsztar.chess.dto.FigureMoveDto;
+import pl.edu.pwsztar.chess.dto.FigureType;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Transactional
 public class ChessFacade {
@@ -13,7 +17,8 @@ public class ChessFacade {
     private RulesOfGame rock;
     private RulesOfGame pawn;
 
-    PointConverter pointConverter=new PointConverter();
+
+    PointConverter pointConverter = new PointConverter();
 
 
     public ChessFacade() {
@@ -26,33 +31,12 @@ public class ChessFacade {
     }
 
     public boolean isCorrectMove(FigureMoveDto figureMoveDto) {
+        Map<FigureType, RulesOfGame> figures = new HashMap<>();
+        figures.put(FigureType.BISHOP, new RulesOfGame.Bishop());
+        figures.put(FigureType.KNIGHT, new RulesOfGame.Knight());
+        figures.put(FigureType.KING, new RulesOfGame.King());
+        figures.put(FigureType.ROCK, new RulesOfGame.Rock());
 
-        switch (figureMoveDto.getType()) {
-            case BISHOP:
-                // wywolaj konwerter punktow oraz popraw ponizszy kod
-                return bishop.isCorrectMove(pointConverter.convert(figureMoveDto.getSource()),pointConverter.convert(figureMoveDto.getDestination()));
-            case KNIGHT:
-                // wywolaj konwerter punktow oraz popraw ponizszy kod
-                return knight.isCorrectMove(pointConverter.convert(figureMoveDto.getSource()),pointConverter.convert(figureMoveDto.getDestination()));
-            case KING:
-                // wywolaj konwerter punktow oraz popraw ponizszy kod
-                return king.isCorrectMove(pointConverter.convert(figureMoveDto.getSource()),pointConverter.convert(figureMoveDto.getDestination()));
-            case QUEEN:
-                // wywolaj konwerter punktow oraz popraw ponizszy kod
-                return queen.isCorrectMove(new Point(0, 0), new Point(1, 1));
-            case ROCK:
-//                System.out.println(pointConverter.convert(figureMoveDto.getSource()).getX());
-//                System.out.println(pointConverter.convert(figureMoveDto.getSource()).getY());
-//                System.out.println(pointConverter.convert(figureMoveDto.getDestination()).getX());
-//                System.out.println(pointConverter.convert(figureMoveDto.getDestination()).getY());
-//                System.out.println(rock.isCorrectMove(pointConverter.convert(figureMoveDto.getSource()),pointConverter.convert(figureMoveDto.getDestination())));
-
-                return rock.isCorrectMove(pointConverter.convert(figureMoveDto.getSource()),pointConverter.convert(figureMoveDto.getDestination()));
-            case PAWN:
-                // wywolaj konwerter punktow oraz popraw ponizszy kod
-                return pawn.isCorrectMove(new Point(0, 0), new Point(1, 1));
-        }
-
-        return false;
+        return figures.get(figureMoveDto.getType()).isCorrectMove(pointConverter.convert(figureMoveDto.getSource()), pointConverter.convert(figureMoveDto.getDestination()));
     }
 }

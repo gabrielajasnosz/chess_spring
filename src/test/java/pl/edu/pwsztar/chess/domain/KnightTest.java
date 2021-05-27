@@ -14,10 +14,10 @@ public class KnightTest {
     @Tag("Knight")
     @ParameterizedTest
     @CsvSource({
-            " 0,  0,  20,  20",
-            "-1, -1, -21, -21",
-            "-1,  4, -3,   2 ",
-            " 0,  1,  2,  -1 ",
+            " 4,  4,  6,5",
+            "4, 4, 5, 6",
+            "4,  4, 2,   5",
+            " 4,4,  2,  3",
     })
     void checkCorrectMoveForKnight(int xStart, int yStart, int xStop, int yStop) {
         assertTrue(knight.isCorrectMove(new Point(xStart, yStart), new Point(xStop, yStop)));
@@ -25,8 +25,8 @@ public class KnightTest {
 
     @ParameterizedTest
     @CsvSource({
-            "0,  1,  1,   -2",
-            "10, 10, 10,  10"
+            "1,  2,  5,   7",
+            "3, 3,6,  6"
     })
     void checkIncorrectMoveForKnight(int xStart, int yStart, int xStop, int yStop) {
         assertFalse(knight.isCorrectMove(new Point(xStart, yStart), new Point(xStop, yStop)));

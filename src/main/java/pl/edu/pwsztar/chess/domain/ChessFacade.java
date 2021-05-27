@@ -14,15 +14,15 @@ public class ChessFacade {
     private RulesOfGame pawn;
 
     PointConverter pointConverter=new PointConverter();
-    // ...
+
 
     public ChessFacade() {
         bishop = new RulesOfGame.Bishop();
         knight = new RulesOfGame.Knight();
-        queen = new RulesOfGame.Knight();
-        king = new RulesOfGame.Knight();
-        rock = new RulesOfGame.Knight();
-        pawn = new RulesOfGame.Knight();
+        queen = new RulesOfGame.Queen();
+        king = new RulesOfGame.King();
+        rock = new RulesOfGame.Rock();
+        pawn = new RulesOfGame.Pawn();
     }
 
     public boolean isCorrectMove(FigureMoveDto figureMoveDto) {
@@ -30,17 +30,22 @@ public class ChessFacade {
         switch (figureMoveDto.getType()) {
             case BISHOP:
                 // wywolaj konwerter punktow oraz popraw ponizszy kod
-                return bishop.isCorrectMove(new Point(0, 0), new Point(1, 1));
+                return bishop.isCorrectMove(pointConverter.convert(figureMoveDto.getSource()),pointConverter.convert(figureMoveDto.getDestination()));
             case KNIGHT:
                 // wywolaj konwerter punktow oraz popraw ponizszy kod
-                return knight.isCorrectMove(new Point(0, 0), new Point(1, 1));
+                return knight.isCorrectMove(pointConverter.convert(figureMoveDto.getSource()),pointConverter.convert(figureMoveDto.getDestination()));
             case KING:
                 // wywolaj konwerter punktow oraz popraw ponizszy kod
-                return king.isCorrectMove(new Point(0, 0), new Point(1, 1));
+                return king.isCorrectMove(pointConverter.convert(figureMoveDto.getSource()),pointConverter.convert(figureMoveDto.getDestination()));
             case QUEEN:
                 // wywolaj konwerter punktow oraz popraw ponizszy kod
                 return queen.isCorrectMove(new Point(0, 0), new Point(1, 1));
             case ROCK:
+//                System.out.println(pointConverter.convert(figureMoveDto.getSource()).getX());
+//                System.out.println(pointConverter.convert(figureMoveDto.getSource()).getY());
+//                System.out.println(pointConverter.convert(figureMoveDto.getDestination()).getX());
+//                System.out.println(pointConverter.convert(figureMoveDto.getDestination()).getY());
+//                System.out.println(rock.isCorrectMove(pointConverter.convert(figureMoveDto.getSource()),pointConverter.convert(figureMoveDto.getDestination())));
 
                 return rock.isCorrectMove(pointConverter.convert(figureMoveDto.getSource()),pointConverter.convert(figureMoveDto.getDestination()));
             case PAWN:
